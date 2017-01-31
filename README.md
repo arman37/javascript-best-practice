@@ -16,7 +16,7 @@ Check out my [Blog](http://nitcrawler.blogspot.com) or say *hello* on [LinkedIn]
 ## <a name="equality">Always Use === instead of using == .</a>
 
 JavaScript offers two sets of equality operators: ==, != and ===, !==. Normally == is known as equality and === is known as identity(strict equality) operator.
-To decide which one is best first we have to understand how differently both sets of operators work. In case of primitive type values equality operator(==) produces true if two operands have the same value. Even if the values are of different types JavaScript doesn't complain. Under the hood JavaScript does type coercion, meaning that the interpreter implicitly tries to convert the values to an expected type following some conversion protocols before comparing. Without further talking lets see some examples:
+To decide which one is best first we have to understand how differently both sets of operators work. In case of primitive type values, equality operator(==) produces true if two operands have the same value. Even if the values are of different types JavaScript doesn't complain. Under the hood JavaScript does type coercion, meaning that the interpreter implicitly tries to convert the values to an expected type following some conversion protocols before comparing. Without further talking lets see some examples:
 
 ```javascript
 false == 0; //true, because 'false' is converted to 0 and then compared.
@@ -46,7 +46,7 @@ true === 1; //false
 "2" === 2;  //false
 ```
 
-in case of reference type, JavaScript Objects are compared by reference, not by values. A JavaScript object is only equal to itself. It can't be equal to any other object even if that object has same number of properties, with the same names and values. Same rule works for Arrays. If two arrays have the same elements in the same order they are not equal to each other.
+In case of reference type, JavaScript Objects are compared by reference, not by values. A JavaScript object is only equal to itself. It can't be equal to any other object even if that object has same number of properties, with the same names and values. Same rule works for Arrays. If two arrays have the same elements in the same order they are not equal to each other.
 
 ```javascript
 var
@@ -65,13 +65,13 @@ No matter what operator you use, if both operands don't refer to the same object
 The rule is:
 
 For primitive types:
-x === y returns true if x and y have the same value and are of the same type.
+  x === y returns true if x and y have the same value and are of the same type.
 
 For reference/object types:
-x === y returns true only if x and y refer to the exact same object.
+  x === y returns true only if x and y refer to the exact same object.
 
 For strings:
-x === y returns true if a and b are both strings and contain the exact same characters
+  x === y returns true if a and b are both strings and contain the exact same characters
 but,
 var x = 'abc';
 var y = new String('abc');
