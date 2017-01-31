@@ -4,12 +4,13 @@
 
 -
 
-Check out my [Blog](http://nitcrawler.blogspot.com) or say *hello* on [LinkedIn](https://bd.linkedin.com/in/arman-bhuiyan) / [Facebook](https://www.facebook.com/arman.it37).
+Check out my [Blog](http://nitcrawler.blogspot.com) or say 'hello' on [LinkedIn](https://bd.linkedin.com/in/arman-bhuiyan) / [Facebook](https://www.facebook.com/arman.it37).
 
 ## Table of Contents
 -
 
 * [Always Use === instead of using ==](#equality)
+* [Strict Mode - Wrap your js file with IIFE](#strict__mode)
 
 ------------------------------------------------
 
@@ -78,3 +79,69 @@ var y = new String('abc');
 so x === y returns false because both operands are not the same type. x is type of string while y is type of object.
 
 One thing to notice here is that, identity operator(===) is faster than equality operator(==) in some cases. When both operands have values of same type, both operators take same time. But if operands have values of different types, identity operator doesn't do type conversion but equality operator does.
+
+## <a name="strict__mode">Strict Mode - Wrap your js file with IIFE.</a>
+
+We know that according to ECMAScript version 5(JavaScript 1.8.5) specification we can use a new directive known as "use strict" to make it easier to write more secure JavaScript code, to place our code into a more constrained form of execution. With strict mode enabled we get to avoid some insecure, ill-advised, pretty bad syntax errors that early version of browsers used to forgive, like trying to assign a value to an undeclared variable, accidentally creating a new global variable by mistyping a variable name, assigning a value to a readonly object property, using a non-existing object property, duplicating variable names, trying to delete a variable or a function or an undeletable object property, using 'eval' or 'arguments' as variable name, using deprecated language features etc.
+
+Since strict mode is standard and a best practice and maybe in the future it'll be our only choice, we have to learn how to use it properly. Strict mode can be used in two ways. One way is using strict mode at the file level and another way is using it at the function level. In both ways the string literal 'use strict' must be placed at the beginning of file/script tag/function body. Since strict mode is only recognized at the top of file/script tag/function body, it causes problem for script concatenation. Placing strict mode in a global context means all your code will run in strict mode. Imagine you have two files named 'A' where strict mode is enabled and 'B' where strict mode is not enabled.
+
+```javascript
+// A.js
+'use strict';
+let foo = () => {
+
+};
+
+// B.js
+let bar = () => {
+
+};
+```
+
+During script concatenation if you place file A before file B producing file named 'AB' then the code in file B will also run in strict mode.
+
+```javascript
+// AB.js
+'use strict';
+let foo = () => {
+
+};
+
+let bar = () => {
+
+};
+```
+If you place file B before file A producing file named 'BA' then none of your code will run in strict mode.
+
+```javascript
+// BA.js
+let bar = () => {
+
+};
+
+'use strict';
+let foo = () => {
+
+};
+```
+
+If your application is small then you can choose 'strict mode only' or 'non-strict mode only' policy. But if your application starts to grow and you are using lots of third party libraries then you gotta come up with a better solution. You can concatenate all strict files and non-strict files in two separate files. But you'll loose control over the file structure of your application, which is bad. The best possible way out there so far is wrapping each file with immediately invoked function expression(IIFE). This way every file will be independently interpreted in different modes.
+
+```javascript
+// BA.js
+(function() {
+  'use strict';
+  let foo = () => {
+
+  };
+}());
+
+// B.js
+(function() {
+  let bar = () => {
+
+  };
+}());
+```
+One thing to notice though is that none of the contents of the file can assume that they are interpreted at global scope.
